@@ -1,0 +1,31 @@
+name: Daily Unlisted Post
+
+on:
+  schedule:
+    - cron: '30 4 * * *' # 10:00 AM IST (04:30 UTC)
+  workflow_dispatch: # Allow manual run
+
+jobs:
+  send-post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily post
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          TO_EMAILS: ${{ secrets.TO_EMAILS }}
+        run: python unlisted_daily_post.py
