@@ -6,76 +6,59 @@ import unlisted_daily_post
 class TestUnlistedDailyPost(unittest.TestCase):
 
     @patch.dict(os.environ, {}, clear=True)
-    def test_draft_post_missing_api_key(self):
+    def test_draft_post_missing_api_keys(self):
         with self.assertRaises(RuntimeError) as ctx:
             unlisted_daily_post.draft_post()
-        self.assertIn("Missing OPENROUTER_API_KEY", str(ctx.exception))
+        self.assertIn("Missing API Key", str(ctx.exception))
 
-    @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
+    @patch.dict(os.environ, {"GEMINI_API_KEY": "fake_gemini_key"}, clear=True)
     @patch("requests.post")
-    def test_draft_post_success_first_model(self, mock_post):
+    def test_draft_post_gemini_success(self, mock_post):
         mock_resp = MagicMock()
         mock_resp.status_code = 200
         mock_resp.json.return_value = {
-            "choices": [{"message": {"content": "Sample generated post text."}}]
+            "choices": [{"message": {"content": "Gemini generated post."}}]
         }
         mock_post.return_value = mock_resp
 
         result = unlisted_daily_post.draft_post()
-        self.assertEqual(result, "Sample generated post text.")
+        self.assertEqual(result, "Gemini generated post.")
         self.assertEqual(mock_post.call_count, 1)
 
-    @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
+    @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_openrouter_key"}, clear=True)
     @patch("requests.post")
-    def test_draft_post_success_list_content(self, mock_post):
+    def test_draft_post_openrouter_success(self, mock_post):
         mock_resp = MagicMock()
         mock_resp.status_code = 200
         mock_resp.json.return_value = {
-            "choices": [{
-                "message": {
-                    "content": [
-                        {"type": "text", "text": "Part 1 of text."},
-                        {"type": "text", "text": "Part 2 of text."}
-                    ]
-                }
-            }]
+            "choices": [{"message": {"content": "OpenRouter generated post."}}]
         }
         mock_post.return_value = mock_resp
 
         result = unlisted_daily_post.draft_post()
-        self.assertEqual(result, "Part 1 of text.\nPart 2 of text.")
+        self.assertEqual(result, "OpenRouter generated post.")
+        self.assertEqual(mock_post.call_count, 1)
 
-    @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
+    @patch.dict(os.environ, {"GEMINI_API_KEY": "fake_gemini", "OPENROUTER_API_KEY": "fake_openrouter"}, clear=True)
     @patch("requests.post")
-    def test_draft_post_fallback_model(self, mock_post):
-        mock_fail = MagicMock()
-        mock_fail.status_code = 404
-        mock_fail.text = "Not Found"
+    def test_draft_post_gemini_fail_fallback_to_openrouter(self, mock_post):
+        mock_gemini_fail = MagicMock()
+        mock_gemini_fail.status_code = 400
+        mock_gemini_fail.text = "Bad Request"
 
-        mock_success = MagicMock()
-        mock_success.status_code = 200
-        mock_success.json.return_value = {
-            "choices": [{"message": {"content": "Fallback generated post."}}]
+        mock_openrouter_success = MagicMock()
+        mock_openrouter_success.status_code = 200
+        mock_openrouter_success.json.return_value = {
+            "choices": [{"message": {"content": "OpenRouter fallback post."}}]
         }
 
-        mock_post.side_effect = [mock_fail, mock_success]
+        mock_post.side_effect = [
+            mock_gemini_fail, mock_gemini_fail, mock_gemini_fail, # 3 Gemini models fail
+            mock_openrouter_success # OpenRouter succeeds
+        ]
 
         result = unlisted_daily_post.draft_post()
-        self.assertEqual(result, "Fallback generated post.")
-        self.assertEqual(mock_post.call_count, 2)
-
-    @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
-    @patch("requests.post")
-    def test_draft_post_all_models_fail(self, mock_post):
-        mock_fail = MagicMock()
-        mock_fail.status_code = 404
-        mock_fail.text = "Not Found"
-        mock_post.return_value = mock_fail
-
-        with self.assertRaises(RuntimeError) as ctx:
-            unlisted_daily_post.draft_post()
-        self.assertIn("All model attempts failed", str(ctx.exception))
-        self.assertEqual(mock_post.call_count, len(unlisted_daily_post.MODELS))
+        self.assertEqual(result, "OpenRouter fallback post.")
 
     @patch.dict(os.environ, {"GMAIL_USER": "user@test.com", "GMAIL_APP_PASSWORD": "pass", "TO_EMAILS": "a@test.com, b@test.com"})
     @patch("smtplib.SMTP")

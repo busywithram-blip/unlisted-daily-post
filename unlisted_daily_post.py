@@ -5,13 +5,19 @@ from datetime import datetime
 import pytz
 import requests
 
-MODELS = [
+OPENROUTER_MODELS = [
     "openrouter/free",
     "minimax/minimax-m3.1-flash:free",
     "google/gemma-4-31b-it:free",
     "google/gemma-4-26b-a4b-it:free",
     "nvidia/nemotron-3.5-lightning:free",
     "liquid/lfm-2.5-2.6b:free"
+]
+
+GEMINI_MODELS = [
+    "gemini-2.5-flash",
+    "gemini-2.0-flash",
+    "gemini-1.5-flash"
 ]
 
 def extract_content(message_obj):
@@ -34,17 +40,11 @@ def extract_content(message_obj):
     return ""
 
 def draft_post():
-    api_key = os.environ.get("OPENROUTER_API_KEY")
-    if not api_key:
-        raise RuntimeError("Missing OPENROUTER_API_KEY environment variable")
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    openrouter_key = os.environ.get("OPENROUTER_API_KEY")
 
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "HTTP-Referer": "https://github.com/busywithram-blip/unlisted-daily-post",
-        "X-Title": "Unlisted Daily Post",
-        "Content-Type": "application/json"
-    }
+    if not gemini_key and not openrouter_key:
+        raise RuntimeError("Missing API Key. Please set GEMINI_API_KEY or OPENROUTER_API_KEY in environment variables / GitHub Secrets.")
 
     ist = pytz.timezone('Asia/Kolkata')
     day = datetime.now(ist).strftime('%A')
@@ -62,26 +62,62 @@ def draft_post():
 ONLY post text."""
 
     errors = []
-    for model in MODELS:
-        try:
-            r = requests.post(url, headers=headers, json={
-                "model": model,
-                "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 800,
-                "temperature": 0.7
-            }, timeout=180)
-            if r.status_code == 200:
-                data = r.json()
-                if "choices" in data and len(data["choices"]) > 0:
-                    message = data["choices"][0].get("message", {})
-                    extracted = extract_content(message)
-                    if extracted:
-                        return extracted
-            errors.append(f"{model}: HTTP {r.status_code} - {r.text[:100]}")
-        except Exception as e:
-            errors.append(f"{model}: {e}")
 
-    raise RuntimeError(f"All model attempts failed: {'; '.join(errors)}")
+    # Try Gemini API if GEMINI_API_KEY is available
+    if gemini_key:
+        gemini_url = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {gemini_key}",
+            "Content-Type": "application/json"
+        }
+        for model in GEMINI_MODELS:
+            try:
+                r = requests.post(gemini_url, headers=headers, json={
+                    "model": model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 800,
+                    "temperature": 0.7
+                }, timeout=120)
+                if r.status_code == 200:
+                    data = r.json()
+                    if "choices" in data and len(data["choices"]) > 0:
+                        message = data["choices"][0].get("message", {})
+                        extracted = extract_content(message)
+                        if extracted:
+                            return extracted
+                errors.append(f"Gemini {model}: HTTP {r.status_code} - {r.text[:100]}")
+            except Exception as e:
+                errors.append(f"Gemini {model}: {e}")
+
+    # Try OpenRouter API if OPENROUTER_API_KEY is available
+    if openrouter_key:
+        openrouter_url = "https://openrouter.ai/api/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {openrouter_key}",
+            "HTTP-Referer": "https://github.com/busywithram-blip/unlisted-daily-post",
+            "X-Title": "Unlisted Daily Post",
+            "Content-Type": "application/json"
+        }
+        for model in OPENROUTER_MODELS:
+            try:
+                r = requests.post(openrouter_url, headers=headers, json={
+                    "model": model,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 800,
+                    "temperature": 0.7
+                }, timeout=120)
+                if r.status_code == 200:
+                    data = r.json()
+                    if "choices" in data and len(data["choices"]) > 0:
+                        message = data["choices"][0].get("message", {})
+                        extracted = extract_content(message)
+                        if extracted:
+                            return extracted
+                errors.append(f"OpenRouter {model}: HTTP {r.status_code} - {r.text[:100]}")
+            except Exception as e:
+                errors.append(f"OpenRouter {model}: {e}")
+
+    raise RuntimeError(f"All AI provider attempts failed: {'; '.join(errors)}")
 
 def send_email(content):
     user = os.environ.get("GMAIL_USER")
