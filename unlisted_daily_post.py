@@ -7,12 +7,31 @@ import requests
 
 MODELS = [
     "openrouter/free",
+    "minimax/minimax-m3.1-flash:free",
     "google/gemma-4-31b-it:free",
     "google/gemma-4-26b-a4b-it:free",
     "nvidia/nemotron-3.5-lightning:free",
-    "minimax/minimax-m3.1-flash:free",
-    "thinkingmachines/inkling:free"
+    "liquid/lfm-2.5-2.6b:free"
 ]
+
+def extract_content(message_obj):
+    if not message_obj:
+        return ""
+    content = message_obj.get("content")
+    if isinstance(content, str):
+        return content.strip()
+    elif isinstance(content, list):
+        parts = []
+        for item in content:
+            if isinstance(item, str):
+                parts.append(item)
+            elif isinstance(item, dict):
+                if item.get("type") == "text" and "text" in item:
+                    parts.append(item["text"])
+                elif "text" in item:
+                    parts.append(item["text"])
+        return "\n".join(parts).strip()
+    return ""
 
 def draft_post():
     api_key = os.environ.get("OPENROUTER_API_KEY")
@@ -54,9 +73,10 @@ ONLY post text."""
             if r.status_code == 200:
                 data = r.json()
                 if "choices" in data and len(data["choices"]) > 0:
-                    content = data["choices"][0]["message"]["content"]
-                    if content and content.strip():
-                        return content
+                    message = data["choices"][0].get("message", {})
+                    extracted = extract_content(message)
+                    if extracted:
+                        return extracted
             errors.append(f"{model}: HTTP {r.status_code} - {r.text[:100]}")
         except Exception as e:
             errors.append(f"{model}: {e}")
@@ -64,8 +84,11 @@ ONLY post text."""
     raise RuntimeError(f"All model attempts failed: {'; '.join(errors)}")
 
 def send_email(content):
-    user = os.environ.get("GMAIL_USER", "busywithram@gmail.com")
-    pwd  = os.environ.get("GMAIL_APP_PASSWORD", "tuavhrwqahthbkcj")
+    user = os.environ.get("GMAIL_USER")
+    pwd  = os.environ.get("GMAIL_APP_PASSWORD")
+
+    if not user or not pwd:
+        raise RuntimeError("Missing GMAIL_USER or GMAIL_APP_PASSWORD environment variable")
 
     to_emails_raw = os.environ.get("TO_EMAILS", user)
     recipients = [e.strip() for e in to_emails_raw.split(",") if e.strip()]

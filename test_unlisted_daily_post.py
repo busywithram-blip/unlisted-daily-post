@@ -27,6 +27,26 @@ class TestUnlistedDailyPost(unittest.TestCase):
 
     @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
     @patch("requests.post")
+    def test_draft_post_success_list_content(self, mock_post):
+        mock_resp = MagicMock()
+        mock_resp.status_code = 200
+        mock_resp.json.return_value = {
+            "choices": [{
+                "message": {
+                    "content": [
+                        {"type": "text", "text": "Part 1 of text."},
+                        {"type": "text", "text": "Part 2 of text."}
+                    ]
+                }
+            }]
+        }
+        mock_post.return_value = mock_resp
+
+        result = unlisted_daily_post.draft_post()
+        self.assertEqual(result, "Part 1 of text.\nPart 2 of text.")
+
+    @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
+    @patch("requests.post")
     def test_draft_post_fallback_model(self, mock_post):
         mock_fail = MagicMock()
         mock_fail.status_code = 404
