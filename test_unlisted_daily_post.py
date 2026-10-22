@@ -1,9 +1,64 @@
 import os
 import unittest
+import html
+from datetime import datetime
 from unittest.mock import patch, MagicMock
 import unlisted_daily_post
 
 class TestUnlistedDailyPost(unittest.TestCase):
+
+    def test_get_daily_niche(self):
+        dt1 = datetime(2026, 1, 1)
+        niche1 = unlisted_daily_post.get_daily_niche(dt1)
+        self.assertIn("niche", niche1)
+        self.assertIn("category", niche1)
+        self.assertIn("cities", niche1)
+        self.assertIn("pain_point", niche1)
+
+        dt2 = datetime(2026, 1, 2)
+        niche2 = unlisted_daily_post.get_daily_niche(dt2)
+        self.assertNotEqual(niche1["niche"], niche2["niche"])
+
+    def test_build_prompt(self):
+        sample_niche = unlisted_daily_post.NICHES[0]
+        prompt = unlisted_daily_post.build_prompt(sample_niche)
+        self.assertIn(sample_niche["niche"], prompt)
+        self.assertIn("=== 1. TODAY'S DIRECTIVE & GROWTH STACK ===", prompt)
+        self.assertIn("=== 2. WHATSAPP COMMUNITY POST ===", prompt)
+        self.assertIn("=== 3. LINKEDIN AUTHORITY POST ===", prompt)
+        self.assertIn("=== 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===", prompt)
+        self.assertIn("DPDP Act 2023", prompt)
+
+    def test_parse_sections_and_html(self):
+        raw = """=== 1. TODAY'S DIRECTIVE & GROWTH STACK ===
+- Step 1: Post in groups
+Psychology: Contrast bias
+📖 *Influence by Robert Cialdini:* "Direct authority wins."
+
+=== 2. WHATSAPP COMMUNITY POST ===
+*Why cold emails fail* in Mumbai.
+Test 2 weeks free. Drop your niche.
+
+=== 3. LINKEDIN AUTHORITY POST ===
+Most agencies waste ₹30,000/mo on SDRs.
+Comment 'DATA' to test free.
+
+=== 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===
+Hey [Name], pulled 3 verified clinic numbers: [1, 2, 3]. Want the sheet?
+"""
+        sections = unlisted_daily_post.parse_sections(raw)
+        self.assertIn("Step 1: Post in groups", sections["directive"])
+        self.assertIn("Why cold emails fail", sections["whatsapp"])
+        self.assertIn("Most agencies waste", sections["linkedin"])
+        self.assertIn("Hey [Name], pulled 3", sections["trojan"])
+
+        sample_niche = unlisted_daily_post.NICHES[0]
+        html_out = unlisted_daily_post.build_html_email(sample_niche, raw)
+        self.assertIn("<!DOCTYPE html>", html_out)
+        self.assertIn(html.escape(sample_niche["niche"]), html_out)
+        self.assertIn("Why cold emails fail", html_out)
+        self.assertIn("Most agencies waste", html_out)
+        self.assertIn("Hey [Name], pulled 3", html_out)
 
     @patch.dict(os.environ, {}, clear=True)
     def test_draft_post_missing_api_key(self):
@@ -63,7 +118,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
         mock_smtp = MagicMock()
         mock_smtp_class.return_value.__enter__.return_value = mock_smtp
 
-        result = unlisted_daily_post.send_email("Test content")
+        result = unlisted_daily_post.send_email("Test content", subject="Custom Subject")
         self.assertEqual(result, "ok")
         mock_smtp.starttls.assert_called_once()
         mock_smtp.login.assert_called_once_with("user@test.com", "pass")
@@ -72,6 +127,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
         sent_msg = mock_smtp.send_message.call_args[0][0]
         self.assertEqual(sent_msg["To"], "a@test.com, b@test.com")
         self.assertEqual(sent_msg["From"], "user@test.com")
+        self.assertEqual(sent_msg["Subject"], "Custom Subject")
 
     @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
     @patch("requests.post")
@@ -96,7 +152,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
 
     @patch.dict(os.environ, {"GMAIL_USER": "user@test.com", "GMAIL_APP_PASSWORD": "pass"}, clear=True)
     @patch("smtplib.SMTP")
-    def test_send_email_default_recipient(self, mock_smtp_class):
+    def test_send_email_default_recipient_and_subject(self, mock_smtp_class):
         mock_smtp = MagicMock()
         mock_smtp_class.return_value.__enter__.return_value = mock_smtp
 
@@ -104,6 +160,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
         self.assertEqual(result, "ok")
         sent_msg = mock_smtp.send_message.call_args[0][0]
         self.assertEqual(sent_msg["To"], "user@test.com")
+        self.assertTrue(sent_msg["Subject"].startswith("🔥 Daily Marketing Brief & Growth Stack:"))
 
 if __name__ == "__main__":
     unittest.main()
