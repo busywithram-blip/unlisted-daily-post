@@ -1,17 +1,24 @@
 import os
+import sys
 import smtplib
 from email.message import EmailMessage
 from datetime import datetime
 import pytz
 import requests
 
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 MODELS = [
-    "openrouter/free",
-    "google/gemma-4-31b-it:free",
-    "google/gemma-4-26b-a4b-it:free",
-    "nvidia/nemotron-3.5-lightning:free",
     "minimax/minimax-m3.1-flash:free",
-    "thinkingmachines/inkling:free"
+    "liquid/lfm-2.5-2.6b:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "recursive/flint-v1.0:free",
+    "nvidia/nemotron-3.5-lightning:free",
+    "openrouter/free"
 ]
 
 def draft_post():
@@ -48,16 +55,22 @@ ONLY post text."""
             r = requests.post(url, headers=headers, json={
                 "model": model,
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 800,
+                "max_tokens": 3000,
                 "temperature": 0.7
-            }, timeout=180)
+            }, timeout=45)
             if r.status_code == 200:
                 data = r.json()
                 if "choices" in data and len(data["choices"]) > 0:
-                    content = data["choices"][0]["message"]["content"]
+                    choice = data["choices"][0]
+                    content = choice.get("message", {}).get("content")
                     if content and content.strip():
-                        return content
-            errors.append(f"{model}: HTTP {r.status_code} - {r.text[:100]}")
+                        return content.strip()
+                    finish_reason = choice.get("finish_reason")
+                    errors.append(f"{model}: HTTP 200 but empty content (finish_reason: {finish_reason})")
+                else:
+                    errors.append(f"{model}: HTTP 200 but no choices returned")
+            else:
+                errors.append(f"{model}: HTTP {r.status_code} - {r.text[:120]}")
         except Exception as e:
             errors.append(f"{model}: {e}")
 
@@ -89,4 +102,5 @@ def send_email(content):
 
 if __name__ == "__main__":
     post = draft_post()
-    print(send_email(post))
+    status = send_email(post)
+    print(status)
