@@ -1,9 +1,32 @@
 import os
 import unittest
+from datetime import datetime
 from unittest.mock import patch, MagicMock
 import unlisted_daily_post
 
 class TestUnlistedDailyPost(unittest.TestCase):
+
+    def test_get_daily_niche(self):
+        # Deterministic test based on specific dates
+        dt1 = datetime(2026, 1, 1)
+        niche1 = unlisted_daily_post.get_daily_niche(dt1)
+        self.assertIn("niche", niche1)
+        self.assertIn("cities", niche1)
+        self.assertIn("ticket", niche1)
+        self.assertIn("gatekeeper_trap", niche1)
+
+        # Confirm next day rotates
+        dt2 = datetime(2026, 1, 2)
+        niche2 = unlisted_daily_post.get_daily_niche(dt2)
+        self.assertNotEqual(niche1["niche"], niche2["niche"])
+
+    def test_build_prompt(self):
+        sample_niche = unlisted_daily_post.NICHES[0]
+        prompt = unlisted_daily_post.build_prompt(sample_niche)
+        self.assertIn(sample_niche["niche"], prompt)
+        self.assertIn("SECTION 1: WHATSAPP GROUP POST", prompt)
+        self.assertIn("SECTION 2: X.COM & THREADS POST", prompt)
+        self.assertIn("DPDP Act 2023", prompt)
 
     @patch.dict(os.environ, {}, clear=True)
     def test_draft_post_missing_api_key(self):
@@ -63,7 +86,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
         mock_smtp = MagicMock()
         mock_smtp_class.return_value.__enter__.return_value = mock_smtp
 
-        result = unlisted_daily_post.send_email("Test content")
+        result = unlisted_daily_post.send_email("Test content", subject="Custom Subject")
         self.assertEqual(result, "ok")
         mock_smtp.starttls.assert_called_once()
         mock_smtp.login.assert_called_once_with("user@test.com", "pass")
@@ -72,6 +95,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
         sent_msg = mock_smtp.send_message.call_args[0][0]
         self.assertEqual(sent_msg["To"], "a@test.com, b@test.com")
         self.assertEqual(sent_msg["From"], "user@test.com")
+        self.assertEqual(sent_msg["Subject"], "Custom Subject")
 
     @patch.dict(os.environ, {"OPENROUTER_API_KEY": "fake_key"})
     @patch("requests.post")
@@ -96,7 +120,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
 
     @patch.dict(os.environ, {"GMAIL_USER": "user@test.com", "GMAIL_APP_PASSWORD": "pass"}, clear=True)
     @patch("smtplib.SMTP")
-    def test_send_email_default_recipient(self, mock_smtp_class):
+    def test_send_email_default_recipient_and_subject(self, mock_smtp_class):
         mock_smtp = MagicMock()
         mock_smtp_class.return_value.__enter__.return_value = mock_smtp
 
@@ -104,6 +128,12 @@ class TestUnlistedDailyPost(unittest.TestCase):
         self.assertEqual(result, "ok")
         sent_msg = mock_smtp.send_message.call_args[0][0]
         self.assertEqual(sent_msg["To"], "user@test.com")
+        self.assertTrue(sent_msg["Subject"].startswith("Daily Marketing Pack:"))
+
+    def test_stubs_publish(self):
+        # Ensure planned hooks run without error
+        unlisted_daily_post.publish_to_x("test")
+        unlisted_daily_post.publish_to_threads("test")
 
 if __name__ == "__main__":
     unittest.main()

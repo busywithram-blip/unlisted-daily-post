@@ -21,10 +21,100 @@ MODELS = [
     "openrouter/free"
 ]
 
-def draft_post():
+NICHES = [
+    {
+        "niche": "Luxury Interior Designers & Turnkey Architects",
+        "cities": "Indiranagar & Whitefield (Bengaluru), Bandra & Juhu (Mumbai), Gurugram",
+        "ticket": "₹5L to ₹25L+ project profits",
+        "gatekeeper_trap": "Instagram DMs get deleted by 21-year-old junior interns. Receptionists block calls. But principal architects live on WhatsApp 24/7 managing site contractors."
+    },
+    {
+        "niche": "High-Ticket Aesthetic, Dental & Hair Restoration Clinics",
+        "cities": "South Delhi, Bandra (Mumbai), Jubilee Hills (Hyderabad)",
+        "ticket": "₹50,000 to ₹3,00,000 per patient package",
+        "gatekeeper_trap": "Cold calls hit reception desks who say 'doctor is in surgery'. Cold emails bounce. Doctors manage clinic ops and VIP consults on their direct WhatsApp."
+    },
+    {
+        "niche": "Direct-to-Consumer (D2C) & Premium Lifestyle Brands",
+        "cities": "Bengaluru, Mumbai, Surat, Ahmedabad",
+        "ticket": "₹10L to ₹50L/mo revenue brands",
+        "gatekeeper_trap": "Apollo and LinkedIn have generic info@ emails. DMs get buried in customer support. Founders review WhatsApp in between inventory and ad checks."
+    },
+    {
+        "niche": "Commercial Real Estate & Luxury Channel Partners",
+        "cities": "BKC (Mumbai), Golf Course Road (Gurugram), HITEC City (Hyderabad)",
+        "ticket": "₹2Cr to ₹15Cr property mandates",
+        "gatekeeper_trap": "Portals sell recycled 2-year-old lead lists to 500 brokers. Agency pitches must hit the managing partner or prime broker directly on WhatsApp."
+    },
+    {
+        "niche": "Upscale Fine-Dining & Cloud Kitchen Restaurant Chains",
+        "cities": "Koramangala (Bengaluru), Connaught Place (Delhi), Indiranagar",
+        "ticket": "₹1L to ₹3L/mo marketing/growth retainers",
+        "gatekeeper_trap": "Restaurant managers on-site never pass sales calls to the owner. The owner only monitors daily revenue and supplier chats on WhatsApp."
+    },
+    {
+        "niche": "B2B Industrial, Capital Equipment & Solar EPC Contractors",
+        "cities": "Pune, Coimbatore, Peenya (Bengaluru), Ahmedabad",
+        "ticket": "₹15L to ₹1Cr+ industrial orders",
+        "gatekeeper_trap": "Cold emails get flagged as spam. Managing Directors never check LinkedIn InMail, but keep WhatsApp open all day for client purchase orders."
+    }
+]
+
+def get_daily_niche(dt=None):
+    """Deterministically pick today's high-ticket Indian niche based on the day of the year."""
+    if dt is None:
+        tz = pytz.timezone("Asia/Kolkata")
+        dt = datetime.now(tz)
+    idx = dt.timetuple().tm_yday % len(NICHES)
+    return NICHES[idx]
+
+def build_prompt(niche_info):
+    return f"""You are the founder of 'Unlisted' (an outbound lead intelligence platform for agencies and B2B founders in India).
+Create today's daily marketing content pack to position Unlisted as the undisputed B2B outbound authority.
+
+TODAY'S NICHE TEARDOWN:
+- Focus Niche: {niche_info['niche']}
+- Target Cities: {niche_info['cities']}
+- Typical Deal Size: {niche_info['ticket']}
+- Gatekeeper Reality: {niche_info['gatekeeper_trap']}
+
+THE PRODUCT (UNLISTED):
+- What it does: Crawls live business websites to extract verified business owner WhatsApp numbers directly.
+- Key Moat: Zero Instagram logins/cookies (no account ban risk), 100% DPDP Act 2023 Sec 3(c)(ii) compliant audit trail, 1-tap mobile wa.me links.
+- Economic Anchor: Replaces a ₹25,000–₹35,000/mo junior SDR for ₹8,000/mo flat.
+- Risk-Reversal Offer: "Test on your niche 2 weeks free. If it books meetings, pay ₹8,000. If not, ₹0 and keep the leads."
+
+OUTPUT FORMAT:
+Generate EXACTLY two sections separated by an explicit boundary line:
+
+=== SECTION 1: WHATSAPP GROUP POST ===
+- Start with a punchy pattern interrupt highlighting why traditional outbound (cold DMs, cold calls, Apollo lists) fails for {niche_info['niche']}.
+- 2-3 lines of practical sales/consumer psychology strategy for how agencies should actually reach these owners.
+- 1 punchy book takeaway from a classic (Influence by Robert Cialdini, Never Split the Difference by Chris Voss, $100M Offers by Alex Hormozi, Alchemy by Rory Sutherland, The Ultimate Sales Machine by Chet Holmes, Thinking Fast and Slow by Daniel Kahneman, Pitch Anything by Oren Klaff, etc.).
+  Format: 📖 *Daily Insight from [Book Name] by [Author]:* "[Quote or core concept] — [How to apply it today]"
+- The Unlisted bridge: How Unlisted solves this by pulling verified owner WhatsApp numbers straight from live business websites.
+- The Hormozi risk-reversal offer + CTA: "Drop your target niche + city below to test 2 weeks free."
+- Formatting Rules:
+  * Clean WhatsApp formatting: *bold* for key terms, blank line between every 1-2 lines.
+  * DO NOT output section numbers or labels inside the post (NO "1. Hook", NO "Section 1", NO "Hook:", etc.).
+  * DO NOT mention days of the week (NO "Thursday drop", etc.).
+  * Length: 130 to 200 words.
+
+=== SECTION 2: X.COM & THREADS POST ===
+- A razor-sharp, high-engagement micro-post (under 280-450 characters).
+- Hook: The brutal reality of pitching {niche_info['niche']} in India.
+- Insight: Why direct WhatsApp in the owner's pocket beats cold email & IG DMs.
+- CTA: "Testing 2 weeks free for agencies. Comment your niche + city."
+- No fluff, maximum 1-2 relevant hashtags.
+"""
+
+def draft_post(niche_info=None):
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         raise RuntimeError("Missing OPENROUTER_API_KEY environment variable")
+
+    if niche_info is None:
+        niche_info = get_daily_niche()
 
     url = "https://openrouter.ai/api/v1/chat/completions"
     headers = {
@@ -34,28 +124,7 @@ def draft_post():
         "Content-Type": "application/json"
     }
 
-    prompt = """Create ONE high-value, engaging daily WhatsApp group post for founders, agency owners, and sales leaders from 'Unlisted'.
-
-Requirements & Structure:
-1. Short 2-3 lines practical strategy for today:
-   - Start with a punchy pattern interrupt (no greetings like "Hey", "Good morning").
-   - Give 2-3 lines of an actionable, practical strategy on client outreach, sales psychology, conversation closing, or buyer economics.
-2. Daily 1-thing book suggestion:
-   - Provide exactly 1 powerful actionable suggestion/quote credited to a real business, sales, consumer psychology, or communication classic (e.g., Influence by Robert Cialdini, Never Split the Difference by Chris Voss, Pitch Anything by Oren Klaff, $100M Offers by Alex Hormozi, The Ultimate Sales Machine by Chet Holmes, Thinking Fast and Slow by Daniel Kahneman, etc.).
-   - Format: 📖 *Daily Insight from [Book Name] by [Author]:* "[One punchy takeaway sentence and how to use it today]"
-3. Unlisted connection & solution:
-   - Seamlessly connect the strategy to how Unlisted solves it: verified owner WhatsApp numbers pulled from live business sites, 1-tap wa.me link, zero IG logins, DPDP compliant.
-4. Risk reversal & CTA:
-   - "Test on your niche 2 weeks free. If it books meetings, pay ₹8,000. If not, ₹0 and keep the leads."
-   - CTA: Drop your target niche + city below to test 2 weeks free.
-
-Formatting Rules:
-- DO NOT output section numbers or labels (NO "1. Hook & Strategy", NO "Section 1", NO "Hook:", etc.). It must read like a natural, compelling WhatsApp message.
-- DO NOT mention days of the week (NO "Thursday drop", "Ready for Thursday", etc.).
-- Use WhatsApp formatting: *bold* for key points, clean whitespace (blank line between every 1-2 lines).
-- No corporate buzzwords/jargon (synergy, streamline, game-changer, revolutionary, bandwidth).
-- Length: 130 to 200 words.
-- Output ONLY the final WhatsApp post text, nothing else."""
+    prompt = build_prompt(niche_info)
 
     errors = []
     for model in MODELS:
@@ -84,7 +153,17 @@ Formatting Rules:
 
     raise RuntimeError(f"All model attempts failed: {'; '.join(errors)}")
 
-def send_email(content):
+def publish_to_x(content):
+    """Placeholder hook for planned X.com API automation."""
+    # Automated publishing to X will be configured in a subsequent phase.
+    print("[INFO] X.com automated posting planned for next release.")
+
+def publish_to_threads(content):
+    """Placeholder hook for planned Meta Threads API automation."""
+    # Automated publishing to Threads will be configured in a subsequent phase.
+    print("[INFO] Threads automated posting planned for next release.")
+
+def send_email(content, subject=None):
     user = os.environ.get("GMAIL_USER", "busywithram@gmail.com")
     pwd  = os.environ.get("GMAIL_APP_PASSWORD", "tuavhrwqahthbkcj")
 
@@ -93,10 +172,14 @@ def send_email(content):
     if not recipients:
         recipients = [user]
 
+    if subject is None:
+        niche_info = get_daily_niche()
+        subject = f"Daily Marketing Pack: {niche_info['niche']}"
+
     msg = EmailMessage()
     msg["From"] = user
     msg["To"] = ", ".join(recipients)
-    msg["Subject"] = "Daily WhatsApp Group Post Draft"
+    msg["Subject"] = subject
     msg.set_content(content)
 
     try:
@@ -109,6 +192,7 @@ def send_email(content):
         raise RuntimeError(f"Failed to send email: {e}")
 
 if __name__ == "__main__":
-    post = draft_post()
-    status = send_email(post)
+    niche = get_daily_niche()
+    post = draft_post(niche)
+    status = send_email(post, subject=f"Daily Marketing Pack: {niche['niche']}")
     print(status)
