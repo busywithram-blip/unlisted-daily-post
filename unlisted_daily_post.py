@@ -127,11 +127,14 @@ TODAY'S TARGET FOCUS:
 - Average Deal Size: {niche_info['ticket']}
 
 THE PRODUCT (UNLISTED):
-- What it does: Crawls live business websites to extract verified business owner WhatsApp numbers directly.
-- Core Advantages:
-  * 100% Ban-Proof: Zero bots or automation touching their WhatsApp accounts. Human reps tap a pre-filled 1-click wa.me link to send.
+- Positioning: Complete End-to-End B2B Lead Generation & Conversational Pipeline System (NOT a scraper).
+- What it does:
+  * 1. Finds & Verifies: Pinpoints active decision-maker WhatsApp lines from live business websites (fresh active domains, never stale databases).
+  * 2. Generates Custom Message Hooks: Pre-writes tailored, high-converting outreach copy for each lead addressing their exact business bottlenecks.
+  * 3. 1-Click Ban-Proof Dispatch: Pre-fills 1-click wa.me mobile links for human reps (100% ban-proof, zero bots on the WhatsApp account).
+  * 4. Multi-Touch Follow-Up Cadence: Pre-builds Day 2, Day 4, and Day 7 follow-up sequences so no leads go cold.
+  * 5. Organized CRM Google Sheet: Formats everything cleanly in a live workspace with status tracking, click-to-chat links, and conversion metrics.
   * Zero Passwords or Logins Required: Never ask for Instagram, WhatsApp, or email logins (0% account liability).
-  * Fresh, Active Data: Pulled directly from live business websites and active domains, never stale or recycled databases.
 
 IMPORTANT TONE & JARGON RULE:
 - DO NOT mention legal acts or compliance statutes (NO "DPDP Act", NO "Section 3(c)(ii)"). Buyers don't care about legal jargon—they care about: ban-proof safety, zero password requests, and direct owner WhatsApp numbers that actually reply.
@@ -149,20 +152,20 @@ OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using th
 - High-converting post ready to paste into WhatsApp founder and agency groups.
 - Punchy pattern interrupt exposing why outreach fails for {niche_info['niche']}.
 - 2-3 lines of practical sales strategy.
-- Seamless bridge to Unlisted (verified owner WhatsApp numbers, 1-tap wa.me, zero IG logins, 100% ban-proof, zero password requests).
+- Seamless bridge to Unlisted (full pipeline: verified owner WhatsApp numbers + pre-written custom icebreakers + 1-tap wa.me + follow-up cadences in clean sheets; 100% ban-proof, zero password requests).
 - ₹8,000 vs ₹0 risk reversal + CTA: "Drop your target niche + city below to test 1 week free."
 - WhatsApp formatting (*bold*, blank lines between sentences). NO corporate jargon. NO day-of-week mentions. 130-180 words.
 
 === 3. LINKEDIN AUTHORITY POST ===
 - Compelling scroll-stopping 2-line hook.
 - A hard-hitting breakdown of why Indian agencies waste money on SDRs cold-calling receptionists or sending dead emails.
-- Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/calls) vs New Outbound (Direct WhatsApp + 100% ban-proof, zero password requests).
-- Offer & CTA: "Want to test this? Comment 'DATA' and your city below — I'll send you 10 verified owner WhatsApp lines for your niche 100% free."
+- Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/receptionist calls) vs New Outbound (Full Conversational Pipeline: verified owner WhatsApp + custom message hooks + 1-tap wa.me + follow-up cadences in clean sheets).
+- Offer & CTA: "Want to test this? Comment 'PIPELINE' and your city below — I'll send you 10 verified owner lines with custom outreach messages pre-formatted in a sheet 100% free."
 - 150-220 words. Clean LinkedIn formatting.
 
 === 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===
 - A 1-to-1 cold WhatsApp message Ram can send directly to 5 agency founders who serve {niche_info['niche']}.
-- Permissionless value: "Hey [Name], ran a live scan across [City] and pulled 3 verified clinic/business owner WhatsApp direct lines this morning: [Lead 1, Lead 2, Lead 3]. Have 30 more in a sheet. Free to test if your team wants?"
+- Permissionless value: "Hey [Name], ran a live scan across [City] and prepared a 3-lead pipeline with verified business owner WhatsApp lines and pre-written custom icebreakers: [Lead 1, Lead 2, Lead 3]. Have 30 more in an organized sheet with 1-click chat links. Free to test if your team wants?"
 - Under 90 words. Zero pitch, 100% value.
 
 === 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
