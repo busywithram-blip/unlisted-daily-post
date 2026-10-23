@@ -192,10 +192,8 @@ def parse_sections(raw_text):
         "trojan": "",
         "piggyback": ""
     }
-    headers = re.findall(r'===\s*([^=
-]+)\s*===', raw_text)
-    bodies = re.split(r'===\s*[^=
-]+\s*===', raw_text)[1:]
+    headers = re.findall(r'===\s*([^=\n]+)\s*===', raw_text)
+    bodies = re.split(r'===\s*[^=\n]+\s*===', raw_text)[1:]
 
     for h, b in zip(headers, bodies):
         h_lower = h.lower()
@@ -216,7 +214,13 @@ def parse_sections(raw_text):
 
     return sections
 
+def clean_text_for_wa(text):
+    """Strip markdown bold markers or keep WhatsApp style bold."""
+    # WhatsApp supports *bold*, _italic_, ~strike~, ```monospace```
+    return text.strip()
+
 def extract_linkedin_links(piggyback_text):
+    """Find LinkedIn profile handles or URLs in the text."""
     matches = re.findall(r'(?:https?://)?(?:www\.)?linkedin\.com/in/([a-zA-Z0-9_-]+)', piggyback_text)
     links = []
     seen = set()
@@ -240,9 +244,11 @@ def build_html_email(niche_info, raw_text):
     trojan_html = html.escape(trojan_clean).replace("\n", "<br>")
     piggyback_html = html.escape(piggyback_clean).replace("\n", "<br>")
 
+    # Build 1-tap WhatsApp deep link
     wa_encoded = urllib.parse.quote(whatsapp_clean)
     wa_url = f"https://wa.me/?text={wa_encoded}"
 
+    # Extract LinkedIn profiles for Piggyback links
     li_links = extract_linkedin_links(piggyback_clean)
     creator_buttons_html = ""
     if li_links:
@@ -355,6 +361,7 @@ def build_html_email(niche_info, raw_text):
     font-weight: 700;
     text-decoration: none;
     letter-spacing: 0.02em;
+    transition: background 0.15s ease;
   }}
   .wa-btn {{
     background: #22c55e;
@@ -532,7 +539,10 @@ def send_email(content, niche_info=None, subject=None):
     msg["To"] = ", ".join(recipients)
     msg["Subject"] = subject
 
+    # Plain text version
     msg.set_content(content)
+
+    # HTML rich card version
     html_content = build_html_email(niche_info, content)
     msg.add_alternative(html_content, subtype="html")
 
@@ -547,6 +557,9 @@ def send_email(content, niche_info=None, subject=None):
 
 if __name__ == "__main__":
     niche = get_daily_niche()
+    print("Generating post for:", niche["niche"])
     post = draft_post(niche)
+    print("\n--- GENERATED POST ---\n")
+    print(post[:500])
     status = send_email(post, niche_info=niche)
-    print(status)
+    print("\nEMAIL SEND STATUS:", status)
