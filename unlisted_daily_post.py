@@ -3,6 +3,7 @@ import sys
 import smtplib
 import html
 import re
+import urllib.parse
 from email.message import EmailMessage
 from datetime import datetime
 import pytz
@@ -15,11 +16,10 @@ if hasattr(sys.stdout, "reconfigure"):
         pass
 
 MODELS = [
-    "minimax/minimax-m3.1-flash:free",
+    "nvidia/nemotron-3.5-lightning:free",
     "liquid/lfm-2.5-2.6b:free",
     "nvidia/nemotron-3-ultra-550b-a55b:free",
     "recursive/flint-v1.0:free",
-    "nvidia/nemotron-3.5-lightning:free",
     "openrouter/free"
 ]
 
@@ -107,7 +107,6 @@ NICHES = [
 ]
 
 def get_daily_niche(dt=None):
-    """Deterministically pick today's high-ticket Indian B2B or C2B niche based on day of year."""
     if dt is None:
         tz = pytz.timezone("Asia/Kolkata")
         dt = datetime.now(tz)
@@ -127,19 +126,21 @@ TODAY'S TARGET FOCUS:
 - Average Deal Size: {niche_info['ticket']}
 
 THE PRODUCT (UNLISTED):
-- Positioning: Complete End-to-End B2B Lead Generation & Conversational Pipeline System (NOT a scraper).
-- What it does:
-  * 1. Finds & Verifies: Pinpoints active decision-maker WhatsApp lines from live business websites (fresh active domains, never stale databases).
-  * 2. Generates Custom Message Hooks: Pre-writes tailored, high-converting outreach copy for each lead addressing their exact business bottlenecks.
-  * 3. 1-Click Ban-Proof Dispatch: Pre-fills 1-click wa.me mobile links for human reps (100% ban-proof, zero bots on the WhatsApp account).
-  * 4. Multi-Touch Follow-Up Cadence: Pre-builds Day 2, Day 4, and Day 7 follow-up sequences so no leads go cold.
-  * 5. Organized CRM Google Sheet: Formats everything cleanly in a live workspace with status tracking, click-to-chat links, and conversion metrics.
+- What it does: Crawls live business websites to extract verified business owner WhatsApp numbers directly.
+- Core Advantages:
+  * 100% Ban-Proof: Zero bots or automation touching their WhatsApp accounts. Human reps tap a pre-filled 1-click wa.me link to send.
   * Zero Passwords or Logins Required: Never ask for Instagram, WhatsApp, or email logins (0% account liability).
+  * Fresh, Active Data: Pulled directly from live business websites and active domains, never stale or recycled databases.
 
-IMPORTANT TONE & JARGON RULE:
-- DO NOT mention legal acts or compliance statutes (NO "DPDP Act", NO "Section 3(c)(ii)"). Buyers don't care about legal jargon—they care about: ban-proof safety, zero password requests, and direct owner WhatsApp numbers that actually reply.
-- Economic Anchor: Replaces a ₹25,000–₹35,000/mo junior SDR for ₹8,000/mo flat.
-- Risk-Reversal Offer: "Test on your niche 1 week free. If it books meetings, pay ₹8,000. If not, ₹0 and keep the leads."
+STRICT PRICING & TONE RULES:
+- ABSOLUTELY NO EXPLICIT PUBLIC PRICING: NEVER mention "₹8,000", "₹8,000/mo", or any specific rupee fee in any public post, comment, or headline.
+- Instead, anchor value against operational waste: "replaces full-time SDR payroll bloat", "zero hiring overhead", "fractional pipeline setup".
+- Risk-Reversal Offer: "Test on your niche 1 week free. If it books meetings, we scale. If not, ₹0 and keep the leads."
+- DO NOT mention legal acts or compliance statutes (NO "DPDP Act", NO "Section 3(c)(ii)"). Buyers only care about ban-proof safety and verified owner responses.
+
+CRITICAL FORMATTING INSTRUCTION:
+- Do NOT output any preamble, thinking, planning, or introductory remarks.
+- Start your response immediately with the exact text: '=== 1. TODAY'S DIRECTIVE & GROWTH STACK ==='.
 
 OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using these exact headers):
 
@@ -149,35 +150,38 @@ OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using th
 - Daily Book Takeaway: Exactly 1 actionable insight from a classic book (Influence by Cialdini, Never Split the Difference by Chris Voss, $100M Offers by Alex Hormozi, Alchemy by Rory Sutherland, The Ultimate Sales Machine by Chet Holmes, Thinking Fast and Slow by Daniel Kahneman, Pitch Anything by Oren Klaff). Format: 📖 *[Book Name] by [Author]:* "[Quote/Concept] — [Application]"
 
 === 2. WHATSAPP COMMUNITY POST ===
-- High-converting post ready to paste into WhatsApp founder and agency groups.
-- Punchy pattern interrupt exposing why outreach fails for {niche_info['niche']}.
-- 2-3 lines of practical sales strategy.
-- Seamless bridge to Unlisted (full pipeline: verified owner WhatsApp numbers + pre-written custom icebreakers + 1-tap wa.me + follow-up cadences in clean sheets; 100% ban-proof, zero password requests).
-- ₹8,000 vs ₹0 risk reversal + CTA: "Drop your target niche + city below to test 1 week free."
-- WhatsApp formatting (*bold*, blank lines between sentences). NO corporate jargon. NO day-of-week mentions. 130-180 words.
+STRICT CONSTRAINT: 50 TO 80 WORDS MAXIMUM. DO NOT WRITE AN ESSAY.
+WhatsApp group members skim in 3 seconds. Use this exact 3-part micro-structure:
+1. Pattern Interrupt Hook: 1 sharp contrarian line exposing why outreach fails for {niche_info['niche']} in {niche_info['cities']}.
+2. Core Reality: Exactly 3 punchy bullet points (one line each):
+   • Point 1: Why receptionists/cold emails fail
+   • Point 2: Why decision-makers live on WhatsApp
+   • Point 3: 1-click mobile dispatch with zero account risk
+3. Low-Friction Call-to-Action: 1 closing question (e.g. "Dropping 10 verified owner lines for {niche_info['cities']} founders today. Reply 'SEND' if you want the sheet.").
+NO corporate filler. NO generic intros. NO explicit pricing numbers. Under 80 words.
 
 === 3. LINKEDIN AUTHORITY POST ===
 - Compelling scroll-stopping 2-line hook.
 - A hard-hitting breakdown of why Indian agencies waste money on SDRs cold-calling receptionists or sending dead emails.
-- Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/receptionist calls) vs New Outbound (Full Conversational Pipeline: verified owner WhatsApp + custom message hooks + 1-tap wa.me + follow-up cadences in clean sheets).
-- Offer & CTA: "Want to test this? Comment 'PIPELINE' and your city below — I'll send you 10 verified owner lines with custom outreach messages pre-formatted in a sheet 100% free."
-- 150-220 words. Clean LinkedIn formatting.
+- Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/calls) vs New Outbound (Direct WhatsApp + 100% ban-proof, zero password requests).
+- Offer & CTA: "Want to test this? Comment 'DATA' and your city below — I'll send you 10 verified owner WhatsApp lines for your niche 100% free."
+- 130-180 words. Clean LinkedIn formatting. NO explicit pricing numbers.
 
 === 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===
 - A 1-to-1 cold WhatsApp message Ram can send directly to 5 agency founders who serve {niche_info['niche']}.
-- Permissionless value: "Hey [Name], ran a live scan across [City] and prepared a 3-lead pipeline with verified business owner WhatsApp lines and pre-written custom icebreakers: [Lead 1, Lead 2, Lead 3]. Have 30 more in an organized sheet with 1-click chat links. Free to test if your team wants?"
-- Under 90 words. Zero pitch, 100% value.
+- Permissionless value: "Hey [Name], ran a live scan across [City] and pulled 3 verified clinic/business owner WhatsApp direct lines this morning: [Lead 1, Lead 2, Lead 3]. Have 30 more in a sheet. Free to test if your team wants?"
+- Under 80 words. Zero pitch, 100% value.
 
 === 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
 Select 2-3 top creators relevant to Indian agencies, founders, and growth (choose dynamically from: Vaibhav Sisinty, Saheli Chatterjee, Jasmin Alic, Lara Acosta, Matt Gray, Varun Mayya, Kshitij Ladia, Justin Welsh, Ruben Hassid).
 For each creator provide:
 • Creator: [Name] | Profile: [linkedin.com/in/handle] | Today's Context: [1 sentence on why their audience cares today]
-• Outperforming Comment: A 3-4 line masterclass comment designed to become the #1 upvoted top comment on their post.
+• Outperforming Comment: A 3-4 line masterclass comment designed to rise to the top of their post.
   Formula:
   1) Immediate pattern interrupt / counter-intuitive agreement.
-  2) A hard receipt/data point from Unlisted's real outbound testing in India (e.g., 68% reply rate on founder WhatsApp vs 4% on cold email; or junior SDRs costing ₹35k/mo to book 2 calls).
+  2) A hard receipt/data point from real outbound testing in India (e.g., 20–35% WhatsApp reply rates vs 2% cold email spam; SDR headcount costing ₹35k/mo to book 2 calls).
   3) A punchy takeaway or low-friction question that makes other readers like and reply.
-  Tone: Authoritative technical operator / builder who shows receipts. No sycophancy (NO "Great post!", NO "Thanks for sharing!").
+  Tone: Authoritative technical operator / builder who shows receipts. No sycophancy (NO "Great post!", NO "Thanks for sharing!"). NO explicit pricing numbers.
 """
 
 def parse_sections(raw_text):
@@ -210,14 +214,48 @@ def parse_sections(raw_text):
 
     return sections
 
+def clean_text_for_wa(text):
+    """Strip markdown bold markers or keep WhatsApp style bold."""
+    # WhatsApp supports *bold*, _italic_, ~strike~, ```monospace```
+    return text.strip()
+
+def extract_linkedin_links(piggyback_text):
+    """Find LinkedIn profile handles or URLs in the text."""
+    matches = re.findall(r'(?:https?://)?(?:www\.)?linkedin\.com/in/([a-zA-Z0-9_-]+)', piggyback_text)
+    links = []
+    seen = set()
+    for m in matches:
+        if m not in seen:
+            seen.add(m)
+            links.append((m, f"https://www.linkedin.com/in/{m}"))
+    return links
+
 def build_html_email(niche_info, raw_text):
     sections = parse_sections(raw_text)
 
     directive_html = html.escape(sections["directive"]).replace("\n", "<br>")
-    whatsapp_html = html.escape(sections["whatsapp"]).replace("\n", "<br>")
-    linkedin_html = html.escape(sections["linkedin"]).replace("\n", "<br>")
-    trojan_html = html.escape(sections["trojan"]).replace("\n", "<br>")
-    piggyback_html = html.escape(sections["piggyback"]).replace("\n", "<br>")
+    whatsapp_clean = sections["whatsapp"]
+    linkedin_clean = sections["linkedin"]
+    trojan_clean = sections["trojan"]
+    piggyback_clean = sections["piggyback"]
+
+    whatsapp_html = html.escape(whatsapp_clean).replace("\n", "<br>")
+    linkedin_html = html.escape(linkedin_clean).replace("\n", "<br>")
+    trojan_html = html.escape(trojan_clean).replace("\n", "<br>")
+    piggyback_html = html.escape(piggyback_clean).replace("\n", "<br>")
+
+    # Build 1-tap WhatsApp deep link
+    wa_encoded = urllib.parse.quote(whatsapp_clean)
+    wa_url = f"https://wa.me/?text={wa_encoded}"
+
+    # Extract LinkedIn profiles for Piggyback links
+    li_links = extract_linkedin_links(piggyback_clean)
+    creator_buttons_html = ""
+    if li_links:
+        creator_buttons_html = '<div style="margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 8px;">'
+        for handle, link in li_links:
+            creator_buttons_html += f'<a href="{link}" target="_blank" class="action-btn li-btn">🔗 Open @{html.escape(handle)}</a> '
+        creator_buttons_html += '</div>'
 
     return f"""<!DOCTYPE html>
 <html>
@@ -226,69 +264,211 @@ def build_html_email(niche_info, raw_text):
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Daily Marketing Brief</title>
 <style>
-  body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }}
-  .container {{ max-width: 680px; margin: 0 auto; }}
-  .header {{ background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid #334155; border-radius: 12px; padding: 24px; margin-bottom: 20px; }}
-  .badge {{ display: inline-block; padding: 4px 10px; border-radius: 9999px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }}
-  .badge-category {{ background: #3b82f6; color: #ffffff; }}
-  .badge-city {{ background: #334155; color: #94a3b8; margin-left: 6px; }}
-  h1 {{ font-size: 20px; font-weight: 700; margin: 0 0 8px 0; color: #ffffff; }}
-  .card {{ background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 1px solid #334155; }}
-  .card-header {{ display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid #334155; padding-bottom: 10px; }}
-  .card-title {{ font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 8px; }}
-  .whatsapp-title {{ color: #25D366; }}
+  body {{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: #080c14;
+    color: #f1f5f9;
+    margin: 0;
+    padding: 24px 12px;
+  }}
+  .container {{
+    max-width: 680px;
+    margin: 0 auto;
+  }}
+  .header {{
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: 1px solid #334155;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }}
+  .badge-row {{
+    margin-bottom: 12px;
+  }}
+  .badge {{
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }}
+  .badge-category {{
+    background: #2563eb;
+    color: #ffffff;
+  }}
+  .badge-city {{
+    background: #1e293b;
+    color: #94a3b8;
+    border: 1px solid #334155;
+    margin-left: 6px;
+  }}
+  h1 {{
+    font-size: 22px;
+    font-weight: 800;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+  }}
+  .meta-sub {{
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.5;
+  }}
+  .card {{
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #1e293b;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  }}
+  .card-header {{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #1e293b;
+    padding-bottom: 10px;
+  }}
+  .card-title {{
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }}
+  .directive-title {{ color: #c084fc; }}
+  .whatsapp-title {{ color: #4ade80; }}
   .linkedin-title {{ color: #38bdf8; }}
-  .trojan-title {{ color: #f59e0b; }}
-  .directive-title {{ color: #a855f7; }}
-  .piggyback-title {{ color: #10b981; }}
-  .copy-block {{ background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; font-family: -apple-system, BlinkMacSystemFont, monospace, sans-serif; font-size: 13px; line-height: 1.6; color: #e2e8f0; white-space: pre-wrap; word-break: break-word; user-select: all; }}
-  .meta-info {{ font-size: 12px; color: #94a3b8; line-height: 1.5; }}
+  .trojan-title {{ color: #fbbf24; }}
+  .piggyback-title {{ color: #2dd4bf; }}
+
+  .action-bar {{
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }}
+  .action-btn {{
+    display: inline-block;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: background 0.15s ease;
+  }}
+  .wa-btn {{
+    background: #22c55e;
+    color: #052e16;
+  }}
+  .li-btn {{
+    background: #0284c7;
+    color: #ffffff;
+  }}
+  .copy-pill {{
+    display: inline-block;
+    font-size: 11px;
+    color: #94a3b8;
+    background: #1e293b;
+    border: 1px solid #334155;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+  }}
+  .copy-box {{
+    background: #080c14;
+    border: 1px solid #1e293b;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #f1f5f9;
+    white-space: pre-wrap;
+    word-break: break-word;
+    user-select: all !important;
+    -webkit-user-select: all !important;
+    cursor: pointer;
+  }}
+  .directive-box {{
+    font-size: 13px;
+    line-height: 1.65;
+    color: #cbd5e1;
+  }}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="header">
-    <span class="badge badge-category">{html.escape(niche_info.get('category', 'B2B Outbound'))}</span>
-    <span class="badge badge-city">{html.escape(niche_info.get('cities', 'India'))}</span>
+    <div class="badge-row">
+      <span class="badge badge-category">{html.escape(niche_info.get('category', 'B2B Outbound'))}</span>
+      <span class="badge badge-city">{html.escape(niche_info.get('cities', 'India'))}</span>
+    </div>
     <h1>Today's Target: {html.escape(niche_info.get('niche', 'B2B Niche'))}</h1>
-    <div class="meta-info">Deal Size: {html.escape(niche_info.get('ticket', '₹50k-₹2L'))} • Replaces a ₹25k-₹35k/mo SDR for ₹8,000/mo flat</div>
+    <div class="meta-sub">Deal Size: {html.escape(niche_info.get('ticket', '₹50k-₹2L'))} • Zero SDR Payroll Bloat • Fractional Setup</div>
   </div>
 
+  <!-- Card 1: Directive -->
   <div class="card">
     <div class="card-header">
       <div class="card-title directive-title">🎯 1. Today's 15-Minute Directive & Growth Stack</div>
     </div>
-    <div style="font-size: 13px; line-height: 1.6; color: #cbd5e1;">
+    <div class="directive-box">
       {directive_html}
     </div>
   </div>
 
+  <!-- Card 2: WhatsApp Community Post -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title whatsapp-title">📱 2. WhatsApp Community & Group Post (Tap to Copy)</div>
+      <div class="card-title whatsapp-title">📱 2. WhatsApp Community & Group Post (50–80 Words)</div>
     </div>
-    <div class="copy-block">{whatsapp_html}</div>
+    <div class="action-bar">
+      <a href="{wa_url}" target="_blank" class="action-btn wa-btn">📲 1-Tap Open & Send in WhatsApp</a>
+      <span class="copy-pill">📋 Tap Text to Select All</span>
+    </div>
+    <div class="copy-box">{whatsapp_html}</div>
   </div>
 
+  <!-- Card 3: LinkedIn Authority Post -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title linkedin-title">💼 3. LinkedIn Authority Post (Tap to Copy)</div>
+      <div class="card-title linkedin-title">💼 3. LinkedIn Authority Post</div>
     </div>
-    <div class="copy-block">{linkedin_html}</div>
+    <div class="action-bar">
+      <a href="https://www.linkedin.com/feed/" target="_blank" class="action-btn li-btn">💼 Open LinkedIn Feed</a>
+      <span class="copy-pill">📋 Tap Text to Select All</span>
+    </div>
+    <div class="copy-box">{linkedin_html}</div>
   </div>
 
+  <!-- Card 4: Trojan Horse Pitch -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title trojan-title">⚔️ 4. Direct Outbound Trojan Horse Pitch (Send to 5 Agency Founders)</div>
+      <div class="card-title trojan-title">⚔️ 4. Direct Outbound Trojan Horse Pitch (Send to 5 Founders)</div>
     </div>
-    <div class="copy-block">{trojan_html}</div>
+    <div class="action-bar">
+      <span class="copy-pill">📋 Tap Text to Select All</span>
+    </div>
+    <div class="copy-box">{trojan_html}</div>
   </div>
 
+  <!-- Card 5: Piggyback Protocol -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title piggyback-title">🚀 5. The Lara Acosta Piggyback Protocol (2-3 Creators to Hijack)</div>
+      <div class="card-title piggyback-title">🚀 5. The Lara Acosta Piggyback Protocol (Top Creators & Comments)</div>
     </div>
-    <div class="copy-block">{piggyback_html}</div>
+    {creator_buttons_html}
+    <div class="action-bar">
+      <span class="copy-pill">📋 Tap Text to Select All</span>
+    </div>
+    <div class="copy-box">{piggyback_html}</div>
   </div>
 </div>
 </body>
@@ -377,6 +557,9 @@ def send_email(content, niche_info=None, subject=None):
 
 if __name__ == "__main__":
     niche = get_daily_niche()
+    print("Generating post for:", niche["niche"])
     post = draft_post(niche)
+    print("\n--- GENERATED POST ---\n")
+    print(post[:500])
     status = send_email(post, niche_info=niche)
-    print(status)
+    print("\nEMAIL SEND STATUS:", status)
