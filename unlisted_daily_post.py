@@ -127,18 +127,21 @@ TODAY'S TARGET FOCUS:
 - Average Deal Size: {niche_info['ticket']}
 
 THE PRODUCT (UNLISTED):
-- What it does: Crawls live business websites to extract verified business owner WhatsApp numbers directly.
-- Core Advantages:
-  * 100% Ban-Proof: Zero bots or automation touching their WhatsApp accounts. Human reps tap a pre-filled 1-click wa.me link to send.
+- Positioning: Complete End-to-End B2B Lead Generation & Conversational Pipeline System (NOT a scraper).
+- What it does:
+  * 1. Finds & Verifies: Pinpoints active decision-maker WhatsApp lines from live business websites (fresh active domains, never stale databases).
+  * 2. Generates Custom Message Hooks: Pre-writes tailored, high-converting outreach copy for each lead addressing their exact business bottlenecks.
+  * 3. 1-Click Ban-Proof Dispatch: Pre-fills 1-click wa.me mobile links for human reps (100% ban-proof, zero bots on the WhatsApp account).
+  * 4. Multi-Touch Follow-Up Cadence: Pre-builds Day 2, Day 4, and Day 7 follow-up sequences so no leads go cold.
+  * 5. Organized CRM Google Sheet: Formats everything cleanly in a live workspace with status tracking, click-to-chat links, and conversion metrics.
   * Zero Passwords or Logins Required: Never ask for Instagram, WhatsApp, or email logins (0% account liability).
-  * Fresh, Active Data: Pulled directly from live business websites and active domains, never stale or recycled databases.
 
 IMPORTANT TONE & JARGON RULE:
 - DO NOT mention legal acts or compliance statutes (NO "DPDP Act", NO "Section 3(c)(ii)"). Buyers don't care about legal jargon—they care about: ban-proof safety, zero password requests, and direct owner WhatsApp numbers that actually reply.
 - Economic Anchor: Replaces a ₹25,000–₹35,000/mo junior SDR for ₹8,000/mo flat.
 - Risk-Reversal Offer: "Test on your niche 1 week free. If it books meetings, pay ₹8,000. If not, ₹0 and keep the leads."
 
-OUTPUT FORMAT (You must output EXACTLY the following 4 labeled sections using these exact headers):
+OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using these exact headers):
 
 === 1. TODAY'S DIRECTIVE & GROWTH STACK ===
 - 3 clear bullet points: Step-by-step instructions for Ram on what to execute today in 15 minutes.
@@ -149,21 +152,32 @@ OUTPUT FORMAT (You must output EXACTLY the following 4 labeled sections using th
 - High-converting post ready to paste into WhatsApp founder and agency groups.
 - Punchy pattern interrupt exposing why outreach fails for {niche_info['niche']}.
 - 2-3 lines of practical sales strategy.
-- Seamless bridge to Unlisted (verified owner WhatsApp numbers, 1-tap wa.me, zero IG logins, 100% ban-proof, zero password requests).
+- Seamless bridge to Unlisted (full pipeline: verified owner WhatsApp numbers + pre-written custom icebreakers + 1-tap wa.me + follow-up cadences in clean sheets; 100% ban-proof, zero password requests).
 - ₹8,000 vs ₹0 risk reversal + CTA: "Drop your target niche + city below to test 1 week free."
 - WhatsApp formatting (*bold*, blank lines between sentences). NO corporate jargon. NO day-of-week mentions. 130-180 words.
 
 === 3. LINKEDIN AUTHORITY POST ===
 - Compelling scroll-stopping 2-line hook.
 - A hard-hitting breakdown of why Indian agencies waste money on SDRs cold-calling receptionists or sending dead emails.
-- Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/calls) vs New Outbound (Direct WhatsApp + 100% ban-proof, zero password requests).
-- Offer & CTA: "Want to test this? Comment 'DATA' and your city below — I'll send you 10 verified owner WhatsApp lines for your niche 100% free."
+- Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/receptionist calls) vs New Outbound (Full Conversational Pipeline: verified owner WhatsApp + custom message hooks + 1-tap wa.me + follow-up cadences in clean sheets).
+- Offer & CTA: "Want to test this? Comment 'PIPELINE' and your city below — I'll send you 10 verified owner lines with custom outreach messages pre-formatted in a sheet 100% free."
 - 150-220 words. Clean LinkedIn formatting.
 
 === 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===
 - A 1-to-1 cold WhatsApp message Ram can send directly to 5 agency founders who serve {niche_info['niche']}.
-- Permissionless value: "Hey [Name], ran a live scan across [City] and pulled 3 verified clinic/business owner WhatsApp direct lines this morning: [Lead 1, Lead 2, Lead 3]. Have 30 more in a sheet. Free to test if your team wants?"
+- Permissionless value: "Hey [Name], ran a live scan across [City] and prepared a 3-lead pipeline with verified business owner WhatsApp lines and pre-written custom icebreakers: [Lead 1, Lead 2, Lead 3]. Have 30 more in an organized sheet with 1-click chat links. Free to test if your team wants?"
 - Under 90 words. Zero pitch, 100% value.
+
+=== 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
+Select 2-3 top creators relevant to Indian agencies, founders, and growth (choose dynamically from: Vaibhav Sisinty, Saheli Chatterjee, Jasmin Alic, Lara Acosta, Matt Gray, Varun Mayya, Kshitij Ladia, Justin Welsh, Ruben Hassid).
+For each creator provide:
+• Creator: [Name] | Profile: [linkedin.com/in/handle] | Today's Context: [1 sentence on why their audience cares today]
+• Outperforming Comment: A 3-4 line masterclass comment designed to become the #1 upvoted top comment on their post.
+  Formula:
+  1) Immediate pattern interrupt / counter-intuitive agreement.
+  2) A hard receipt/data point from Unlisted's real outbound testing in India (e.g., 68% reply rate on founder WhatsApp vs 4% on cold email; or junior SDRs costing ₹35k/mo to book 2 calls).
+  3) A punchy takeaway or low-friction question that makes other readers like and reply.
+  Tone: Authoritative technical operator / builder who shows receipts. No sycophancy (NO "Great post!", NO "Thanks for sharing!").
 """
 
 def parse_sections(raw_text):
@@ -171,7 +185,8 @@ def parse_sections(raw_text):
         "directive": "",
         "whatsapp": "",
         "linkedin": "",
-        "trojan": ""
+        "trojan": "",
+        "piggyback": ""
     }
     headers = re.findall(r'===\s*([^=\n]+)\s*===', raw_text)
     bodies = re.split(r'===\s*[^=\n]+\s*===', raw_text)[1:]
@@ -187,6 +202,8 @@ def parse_sections(raw_text):
             sections["linkedin"] = b_clean
         elif "trojan" in h_lower or "outbound" in h_lower:
             sections["trojan"] = b_clean
+        elif "piggyback" in h_lower or "creator" in h_lower:
+            sections["piggyback"] = b_clean
 
     if not sections["whatsapp"] and not sections["linkedin"]:
         sections["whatsapp"] = raw_text.strip()
@@ -200,6 +217,7 @@ def build_html_email(niche_info, raw_text):
     whatsapp_html = html.escape(sections["whatsapp"]).replace("\n", "<br>")
     linkedin_html = html.escape(sections["linkedin"]).replace("\n", "<br>")
     trojan_html = html.escape(sections["trojan"]).replace("\n", "<br>")
+    piggyback_html = html.escape(sections["piggyback"]).replace("\n", "<br>")
 
     return f"""<!DOCTYPE html>
 <html>
@@ -222,6 +240,7 @@ def build_html_email(niche_info, raw_text):
   .linkedin-title {{ color: #38bdf8; }}
   .trojan-title {{ color: #f59e0b; }}
   .directive-title {{ color: #a855f7; }}
+  .piggyback-title {{ color: #10b981; }}
   .copy-block {{ background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 16px; font-family: -apple-system, BlinkMacSystemFont, monospace, sans-serif; font-size: 13px; line-height: 1.6; color: #e2e8f0; white-space: pre-wrap; word-break: break-word; user-select: all; }}
   .meta-info {{ font-size: 12px; color: #94a3b8; line-height: 1.5; }}
 </style>
@@ -263,6 +282,13 @@ def build_html_email(niche_info, raw_text):
       <div class="card-title trojan-title">⚔️ 4. Direct Outbound Trojan Horse Pitch (Send to 5 Agency Founders)</div>
     </div>
     <div class="copy-block">{trojan_html}</div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title piggyback-title">🚀 5. The Lara Acosta Piggyback Protocol (2-3 Creators to Hijack)</div>
+    </div>
+    <div class="copy-block">{piggyback_html}</div>
   </div>
 </div>
 </body>
