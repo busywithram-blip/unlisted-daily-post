@@ -49,15 +49,15 @@ Comment 'DATA' to test free.
 Hey [Name], pulled 3 verified clinic numbers: [1, 2, 3]. Want the sheet?
 
 === 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
-Creator: Vaibhav Sisinty | Profile: linkedin.com/in/vaibhavsisinty
-Outperforming Comment: Stop burning money on ads when WhatsApp has a 68% reply rate.
+Creator: Alex Hormozi | Profile: linkedin.com/in/alexhormozi
+Outperforming Comment: Stop burning money on SDR dials when WhatsApp has a 45% reply rate.
 """
         sections = unlisted_daily_post.parse_sections(raw)
         self.assertIn("Step 1: Post in groups", sections["directive"])
         self.assertIn("Why cold emails fail", sections["whatsapp"])
         self.assertIn("Most agencies waste", sections["linkedin"])
         self.assertIn("Hey [Name], pulled 3", sections["trojan"])
-        self.assertIn("Vaibhav Sisinty", sections["piggyback"])
+        self.assertIn("Alex Hormozi", sections["piggyback"])
 
         sample_niche = unlisted_daily_post.NICHES[0]
         html_out = unlisted_daily_post.build_html_email(sample_niche, raw)
@@ -66,7 +66,8 @@ Outperforming Comment: Stop burning money on ads when WhatsApp has a 68% reply r
         self.assertIn("Why cold emails fail", html_out)
         self.assertIn("Most agencies waste", html_out)
         self.assertIn("Hey [Name], pulled 3", html_out)
-        self.assertIn("Vaibhav Sisinty", html_out)
+        self.assertIn("Alex Hormozi", html_out)
+        self.assertIn("https://www.linkedin.com/in/alexhormozi", html_out)
 
     @patch.dict(os.environ, {}, clear=True)
     def test_draft_post_missing_api_key(self):

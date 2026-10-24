@@ -150,15 +150,17 @@ OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using th
 - Daily Book Takeaway: Exactly 1 actionable insight from a classic book (Influence by Cialdini, Never Split the Difference by Chris Voss, $100M Offers by Alex Hormozi, Alchemy by Rory Sutherland, The Ultimate Sales Machine by Chet Holmes, Thinking Fast and Slow by Daniel Kahneman, Pitch Anything by Oren Klaff). Format: 📖 *[Book Name] by [Author]:* "[Quote/Concept] — [Application]"
 
 === 2. WHATSAPP COMMUNITY POST ===
-STRICT CONSTRAINT: 50 TO 80 WORDS MAXIMUM. DO NOT WRITE AN ESSAY.
-WhatsApp group members skim in 3 seconds. Use this exact 3-part micro-structure:
-1. Pattern Interrupt Hook: 1 sharp contrarian line exposing why outreach fails for {niche_info['niche']} in {niche_info['cities']}.
-2. Core Reality: Exactly 3 punchy bullet points (one line each):
-   • Point 1: Why receptionists/cold emails fail
-   • Point 2: Why decision-makers live on WhatsApp
-   • Point 3: 1-click mobile dispatch with zero account risk
-3. Low-Friction Call-to-Action: 1 closing question (e.g. "Dropping 10 verified owner lines for {niche_info['cities']} founders today. Reply 'SEND' if you want the sheet.").
-NO corporate filler. NO generic intros. NO explicit pricing numbers. Under 80 words.
+STRICT CONSTRAINT: 60 TO 85 WORDS MAXIMUM. ULTRA-TACTICAL OPERATIONAL CLARITY.
+Target readers: Agency founders and performance marketing leads in founder WhatsApp groups.
+DO NOT write generic marketing fluff ("cold outreach is dead", "WhatsApp is personal"). Write like an elite agency operations lead diagnosing a broken sales pipeline.
+Use this exact 3-part micro-structure:
+1. Operational Bottleneck Hook (1-2 lines): Name the agency type pitching {niche_info['niche']} in {niche_info['cities']}. Name the exact gatekeeper barrier (e.g. SDRs dialing numbers from Google Maps only to get screened by receptionists: "Doctor is in surgery / send your deck to info@").
+2. The 3-Point Tactical Fix (one bullet line each):
+   • Mechanism: Unlisted crawls live booking/checkout pages across {niche_info['cities']} to extract the founder's personal WhatsApp (no stale Apollo lists or dead info@ emails).
+   • Ban-Proof Rep Workflow: Reps tap a pre-filled wa.me teardown link directly from their phone in 1 click (zero bots, zero account logins, 0% ban liability).
+   • Response Reality: 35%+ direct reply rate within 20 minutes because clinic/brand owners check WhatsApp between meetings.
+3. Concrete Deliverable Call-to-Action: "Dropping a Google Sheet with 10 verified {niche_info['niche']} owner WhatsApp lines + pre-written audits for {niche_info['cities']}. Reply 'SHEET' and I'll DM the link to test."
+NO corporate filler. NO generic intros. NO explicit pricing numbers. Exactly 60-85 words.
 
 === 3. LINKEDIN AUTHORITY POST ===
 - Compelling scroll-stopping 2-line hook.
@@ -173,15 +175,26 @@ NO corporate filler. NO generic intros. NO explicit pricing numbers. Under 80 wo
 - Under 80 words. Zero pitch, 100% value.
 
 === 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
-Select 2-3 top creators relevant to Indian agencies, founders, and growth (choose dynamically from: Vaibhav Sisinty, Saheli Chatterjee, Jasmin Alic, Lara Acosta, Matt Gray, Varun Mayya, Kshitij Ladia, Justin Welsh, Ruben Hassid).
+Select 2-3 top creators whose audience consists of BUILDERS & OPERATORS (agency founders, performance marketers, AEO/GEO leaders, and B2B growth operators) — NOT entry-level learners or students.
+Choose dynamically from:
+- Alex Hormozi (Offer structure, client acquisition bottlenecks, replacing human SDR friction)
+- Sorav Jain (echoVME / Digital Scholar — Indian performance marketing agency founders)
+- Deepak Kanakaraju / Digital Deepak (PixelTrack — Indian performance marketers & agency operators)
+- Neil Patel (NP Digital India — Indian SEO, AEO & performance agency heads)
+- Ross Simmonds (Foundation — B2B content marketing distribution & AEO/GEO systems)
+- Jasmin Alic (Top LinkedIn positioning & high-ticket B2B copy for agency owners)
+- Lara Acosta (LA Media — Organic LinkedIn agency scaling & founder positioning)
+- Peep Laja (Wynter / CXL — B2B positioning, buyer intent & message testing)
+- Justin Welsh (Lean high-margin B2B service systems & outbound leverage)
+
 For each creator provide:
-• Creator: [Name] | Profile: [linkedin.com/in/handle] | Today's Context: [1 sentence on why their audience cares today]
+• Creator: [Name] | Profile: [linkedin.com/in/handle] | Today's Context: [1 sentence on why agency/performance founders care today]
 • Outperforming Comment: A 3-4 line masterclass comment designed to rise to the top of their post.
   Formula:
-  1) Immediate pattern interrupt / counter-intuitive agreement.
-  2) A hard receipt/data point from real outbound testing in India (e.g., 20–35% WhatsApp reply rates vs 2% cold email spam; SDR headcount costing ₹35k/mo to book 2 calls).
-  3) A punchy takeaway or low-friction question that makes other readers like and reply.
-  Tone: Authoritative technical operator / builder who shows receipts. No sycophancy (NO "Great post!", NO "Thanks for sharing!"). NO explicit pricing numbers.
+  1) Immediate pattern interrupt / counter-intuitive agreement with their thesis.
+  2) Hard field receipt from testing outbound in India (e.g., contrasting ₹35k/mo junior SDR payroll cold-calling clinic receptionists vs 35-45% reply rates on 1-click wa.me audit teardowns; stale Apollo info@ emails vs live website crawling).
+  3) A sharp takeaway or low-friction question that makes agency founders upvote and comment.
+  Tone: Authoritative technical builder/operator who shows receipts. No sycophancy (NO "Great post!", NO "Thanks for sharing!"). NO explicit pricing numbers.
 """
 
 def parse_sections(raw_text):
@@ -221,11 +234,12 @@ def clean_text_for_wa(text):
 
 def extract_linkedin_links(piggyback_text):
     """Find LinkedIn profile handles or URLs in the text."""
-    matches = re.findall(r'(?:https?://)?(?:www\.)?linkedin\.com/in/([a-zA-Z0-9_-]+)', piggyback_text)
+    matches = re.findall(r'(?:https?://)?(?:www\.)?linkedin\.com/in/([a-zA-Z0-9_\.-]+)', piggyback_text)
     links = []
     seen = set()
-    for m in matches:
-        if m not in seen:
+    for raw_m in matches:
+        m = raw_m.rstrip(".,;:)")
+        if m and m not in seen:
             seen.add(m)
             links.append((m, f"https://www.linkedin.com/in/{m}"))
     return links
@@ -462,7 +476,7 @@ def build_html_email(niche_info, raw_text):
   <!-- Card 5: Piggyback Protocol -->
   <div class="card">
     <div class="card-header">
-      <div class="card-title piggyback-title">🚀 5. The Lara Acosta Piggyback Protocol (Top Creators & Comments)</div>
+      <div class="card-title piggyback-title">🚀 5. The Builder Piggyback Protocol (Top Authorities & Comments)</div>
     </div>
     {creator_buttons_html}
     <div class="action-bar">
