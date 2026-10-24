@@ -12,7 +12,7 @@ class TestUnlistedDailyPost(unittest.TestCase):
         niche1 = unlisted_daily_post.get_daily_niche(dt1)
         self.assertIn("niche", niche1)
         self.assertIn("category", niche1)
-        self.assertIn("cities", niche1)
+        self.assertIn("target_market", niche1)
         self.assertIn("pain_point", niche1)
 
         dt2 = datetime(2026, 1, 2)
@@ -38,15 +38,15 @@ Psychology: Contrast bias
 📖 *Influence by Robert Cialdini:* "Direct authority wins."
 
 === 2. WHATSAPP COMMUNITY POST ===
-*Why cold emails fail* in Mumbai.
+*Why cold emails fail*.
 Test 1 week free. Drop your niche.
 
 === 3. LINKEDIN AUTHORITY POST ===
 Most agencies waste ₹30,000/mo on SDRs.
-Comment 'DATA' to test free.
+Comment your niche to test free on unlistedbot.pages.dev.
 
 === 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===
-Hey [Name], pulled 3 verified clinic numbers: [1, 2, 3]. Want the sheet?
+Hey [Name], pulled 1 verified clinic owner with a 1-tap teardown message ready to send. Test free at unlistedbot.pages.dev
 
 === 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
 Creator: Alex Hormozi | Profile: linkedin.com/in/alexhormozi
@@ -56,7 +56,7 @@ Outperforming Comment: Stop burning money on SDR dials when WhatsApp has a 45% r
         self.assertIn("Step 1: Post in groups", sections["directive"])
         self.assertIn("Why cold emails fail", sections["whatsapp"])
         self.assertIn("Most agencies waste", sections["linkedin"])
-        self.assertIn("Hey [Name], pulled 3", sections["trojan"])
+        self.assertIn("Hey [Name], pulled 1", sections["trojan"])
         self.assertIn("Alex Hormozi", sections["piggyback"])
 
         sample_niche = unlisted_daily_post.NICHES[0]
@@ -65,7 +65,7 @@ Outperforming Comment: Stop burning money on SDR dials when WhatsApp has a 45% r
         self.assertIn(html.escape(sample_niche["niche"]), html_out)
         self.assertIn("Why cold emails fail", html_out)
         self.assertIn("Most agencies waste", html_out)
-        self.assertIn("Hey [Name], pulled 3", html_out)
+        self.assertIn("Hey [Name], pulled 1", html_out)
         self.assertIn("Alex Hormozi", html_out)
         self.assertIn("https://www.linkedin.com/in/alexhormozi", html_out)
 
