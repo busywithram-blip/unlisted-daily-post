@@ -12,10 +12,10 @@ Every email delivers 5 distinct, copy-paste-ready cards directly to your inbox:
 | Card | Name | Description | Action Time |
 | :--- | :--- | :--- | :--- |
 | **🎯 Card 1** | **15-Minute Directive & Growth Stack** | Tactical daily mission, target city, and operational insight. | 2 min read |
-| **📱 Card 2** | **WhatsApp Community & Group Post** | Native conversational value drop for agency groups & communities. | 30 sec tap-to-copy |
+| **📱 Card 2** | **WhatsApp Community & Group Post** | Ultra-tactical 60–85 word operational breakdown: exact gatekeeper bottleneck, live website crawl mechanism, ban-proof 1-tap wa.me dispatch, and tangible Google Sheet deliverable CTA. | 30 sec tap-to-send |
 | **💼 Card 3** | **LinkedIn Authority Post** | High-dwell-time post (teardown, contrast table, or story) formatted for LinkedIn's algorithm. | 60 sec publish |
 | **⚔️ Card 4** | **Trojan Horse Outbound Pitch** | 3-line direct message offering a free 10-lead sample batch to 5 agency founders. | 5 min send |
-| **🚀 Card 5** | **The Lara Acosta Piggyback Protocol** | 2-3 top creators (Vaibhav Sisinty, Saheli Chatterjee, Jasmin Alic, Lara Acosta) with pre-written, outperforming comments designed to win the #1 pinned spot. | 3 min paste |
+| **🚀 Card 5** | **The Builder Piggyback Protocol** | 2-3 top authorities whose audience consists of agency builders & operators (Alex Hormozi, Sorav Jain, Deepak Kanakaraju, Neil Patel, Ross Simmonds, Jasmin Alic, Lara Acosta) with ready-to-paste outperforming comments. | 3 min paste |
 
 ---
 
