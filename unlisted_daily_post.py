@@ -28,7 +28,7 @@ NICHES = [
         "category": "B2B Marketing & Agencies",
         "niche": "Performance Agencies Pitching Aesthetic & Dental Clinics",
         "target_audience": "Agency founders who run Meta/Google ads for dentists, dermatologists, and hair transplant clinics.",
-        "cities": "South Delhi, Bandra (Mumbai), Jubilee Hills (Hyderabad) & Jumeirah (Dubai)",
+        "target_market": "Aesthetic, Dental & Hair Restoration Clinics",
         "pain_point": "Sales reps spend 4 hours a day on Google Maps only to get blocked by clinic receptionists who say 'doctor is in surgery'.",
         "ticket": "₹50,000 to ₹1,50,000/mo retainer per clinic (AED 5,000–15,000 in UAE)"
     },
@@ -36,7 +36,7 @@ NICHES = [
         "category": "B2B High-Ticket Services",
         "niche": "Turnkey Interior Fitout & Commercial Architecture Firms",
         "target_audience": "Founders of commercial interior studios and architectural firms pitching retail stores, offices, and upscale clinics.",
-        "cities": "Bengaluru, Mumbai, Gurugram & Business Bay / DIFC (Dubai)",
+        "target_market": "High-End Retail Stores, Corporate Offices & Commercial Studios",
         "pain_point": "Instagram DMs are handled by junior social media interns who delete pitches. Principal architects live on WhatsApp on-site managing contractors.",
         "ticket": "₹10L to ₹50L+ project budgets (AED 50k–250k in UAE)"
     },
@@ -44,7 +44,7 @@ NICHES = [
         "category": "C2B Creators & Solo Operators",
         "niche": "High-Intent UGC Creators & Video Ad Specialists Pitching D2C Brands",
         "target_audience": "Solo UGC creators, video editors, and creative strategists pitching direct-to-consumer (D2C) brands for paid ad creative.",
-        "cities": "Bengaluru, Mumbai, Surat, Ahmedabad & Dubai",
+        "target_market": "Fast-Growing D2C & Consumer Brands",
         "pain_point": "Cold DMs to brand Instagram pages get answered by 20-year-old community managers with zero hiring budget. Founders check WhatsApp between warehouse and ad checks.",
         "ticket": "₹30,000 to ₹1,00,000 creative retainer packages"
     },
@@ -52,7 +52,7 @@ NICHES = [
         "category": "B2B Agencies & Tech",
         "niche": "E-commerce Growth & Retention Agencies for D2C Brands",
         "target_audience": "Performance agency founders pitching high-growth consumer brands doing ₹10L–₹50L/mo GMV (AED 50k–250k GMV).",
-        "cities": "Bengaluru, Mumbai, Delhi NCR & Dubai",
+        "target_market": "Scaling E-commerce & Direct-to-Consumer Brands",
         "pain_point": "Apollo and LinkedIn have generic info@ emails. DMs get buried in customer support. Founders review WhatsApp in between inventory and ad checks.",
         "ticket": "₹75,000 to ₹2,50,000/mo retainer"
     },
@@ -60,7 +60,7 @@ NICHES = [
         "category": "B2B Real Estate & Broking",
         "niche": "Commercial Real Estate Channel Partners & Luxury Mandate Brokers",
         "target_audience": "Agency operators and prime real estate brokers pitching luxury developers and commercial landlords.",
-        "cities": "BKC (Mumbai), Golf Course Road (Gurugram) & Downtown / Palm Jumeirah (Dubai)",
+        "target_market": "Luxury Property Developers & Commercial Landlords",
         "pain_point": "Portals sell recycled 2-year-old lead lists to 500 brokers. Agency pitches must hit the managing partner or prime broker directly on WhatsApp.",
         "ticket": "₹2Cr to ₹15Cr property mandates (AED 5M–30M in UAE)"
     },
@@ -68,7 +68,7 @@ NICHES = [
         "category": "B2B Creative Studios",
         "niche": "High-End Video Production & Commercial Studios",
         "target_audience": "Creative directors and video production house founders pitching corporate commercials and D2C brand films.",
-        "cities": "Mumbai, Bengaluru, Delhi NCR",
+        "target_market": "Funded Consumer Brands & Enterprise Marketing Teams",
         "pain_point": "Cold emails bounce or sit in unread agency inboxes. Brand CMOs and founders respond to 15-second personalized video reviews on WhatsApp.",
         "ticket": "₹1,50,000 to ₹6,00,000 per brand film"
     },
@@ -76,7 +76,7 @@ NICHES = [
         "category": "B2B Industrial & Manufacturing",
         "niche": "B2B Industrial, Capital Equipment & Solar EPC Contractors",
         "target_audience": "Marketing leaders and sales heads of industrial machinery manufacturers and commercial solar installers.",
-        "cities": "Pune, Coimbatore, Peenya (Bengaluru), Ahmedabad",
+        "target_market": "Industrial Machinery, Heavy Equipment & Solar EPC",
         "pain_point": "Cold emails get flagged as spam. Managing Directors never check LinkedIn InMail, but keep WhatsApp open all day for client purchase orders.",
         "ticket": "₹15L to ₹1Cr+ industrial orders"
     },
@@ -84,7 +84,7 @@ NICHES = [
         "category": "C2B High-Ticket Freelancers",
         "niche": "Direct-Response Copywriters & Funnel Builders Pitching E-comm Founders",
         "target_audience": "Solo direct-response copywriters, email marketing specialists, and funnel consultants.",
-        "cities": "National / Remote (India & Global)",
+        "target_market": "D2C Founders & High-Volume E-commerce Stores",
         "pain_point": "Cold emails to generic support desks never reach the founder. A 3-line WhatsApp teardown identifying an email checkout leak gets answered in 10 minutes.",
         "ticket": "₹40,000 to ₹1,20,000/mo retainer"
     },
@@ -92,7 +92,7 @@ NICHES = [
         "category": "B2B Consulting & HR",
         "niche": "Corporate Training, Executive Coaching & HR Consultancies",
         "target_audience": "Founders of leadership training consultancies and boutique executive search firms pitching fast-scaling startups.",
-        "cities": "Bengaluru, Delhi NCR, Hyderabad, Mumbai",
+        "target_market": "Fast-Growing Startups & Mid-Market Enterprises",
         "pain_point": "Pitches to corporate HR land in a black hole. Founders need direct mobile access to the CEO or COO.",
         "ticket": "₹1,50,000 to ₹5,00,000 per engagement"
     },
@@ -100,7 +100,7 @@ NICHES = [
         "category": "B2B Hospitality & Retail",
         "niche": "Fine-Dining, Cloud Kitchen & Franchise Restaurant Chains",
         "target_audience": "Agency founders pitching food & beverage brand scaling, local SEO, and influencer marketing.",
-        "cities": "Koramangala (Bengaluru), Connaught Place (Delhi), Indiranagar",
+        "target_market": "Premium Restaurant Groups, Cloud Kitchens & Franchises",
         "pain_point": "On-site restaurant managers never pass sales calls to the owner. The owner only monitors daily revenue and supplier chats on WhatsApp.",
         "ticket": "₹1L to ₹3L/mo marketing/growth retainers"
     }
@@ -114,14 +114,14 @@ def get_daily_niche(dt=None):
     return NICHES[idx]
 
 def build_prompt(niche_info):
-    return f"""You are the Chief Marketing Officer and Growth Lead for 'Unlisted' (the B2B WhatsApp decision-maker lead engine in India).
+    return f"""You are the Chief Marketing Officer and Growth Lead for 'Unlisted' (the B2B WhatsApp decision-maker lead engine).
 Generate today's complete Daily Marketing Brief & Growth Stack for the founder (Ram) to market Unlisted and acquire paying agency and B2B clients.
 
 TODAY'S TARGET FOCUS:
 - Category: {niche_info['category']}
 - Niche: {niche_info['niche']}
 - Target Audience: {niche_info['target_audience']}
-- Target Cities: {niche_info['cities']}
+- Target Market: {niche_info.get('target_market', niche_info.get('niche'))}
 - Friction & Gatekeeper Bottleneck: {niche_info['pain_point']}
 - Average Deal Size: {niche_info['ticket']}
 
@@ -137,6 +137,8 @@ STRICT PRICING & TONE RULES:
 - Instead, anchor value against operational waste: "replaces full-time SDR payroll bloat", "zero hiring overhead", "fractional pipeline setup".
 - Risk-Reversal Offer: "Test on your niche 1 week free. If it books meetings, we scale. If not, ₹0 and keep the leads."
 - DO NOT mention legal acts or compliance statutes (NO "DPDP Act", NO "Section 3(c)(ii)"). Buyers only care about ban-proof safety and verified owner responses.
+- NO CITY RESTRICTIONS: We do NOT target cities. Target by business niche and industry vertical only.
+- NO SPREADSHEET CTAs: NEVER promise to manually compile or DM spreadsheets. The product is a self-serve 1-tap mobile tool at unlistedbot.pages.dev. CTA directs users to test on unlistedbot.pages.dev.
 
 CRITICAL FORMATTING INSTRUCTION:
 - Do NOT output any preamble, thinking, planning, or introductory remarks.
@@ -150,29 +152,41 @@ OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using th
 - Daily Book Takeaway: Exactly 1 actionable insight from a classic book (Influence by Cialdini, Never Split the Difference by Chris Voss, $100M Offers by Alex Hormozi, Alchemy by Rory Sutherland, The Ultimate Sales Machine by Chet Holmes, Thinking Fast and Slow by Daniel Kahneman, Pitch Anything by Oren Klaff). Format: 📖 *[Book Name] by [Author]:* "[Quote/Concept] — [Application]"
 
 === 2. WHATSAPP COMMUNITY POST ===
-STRICT CONSTRAINT: 60 TO 85 WORDS MAXIMUM. ULTRA-TACTICAL OPERATIONAL CLARITY.
-Target readers: Agency founders and performance marketing leads in founder WhatsApp groups.
-DO NOT write generic marketing fluff ("cold outreach is dead", "WhatsApp is personal"). Write like an elite agency operations lead diagnosing a broken sales pipeline.
-Use this exact 3-part micro-structure:
-1. Operational Bottleneck Hook (1-2 lines): Name the agency type pitching {niche_info['niche']} in {niche_info['cities']}. Name the exact gatekeeper barrier (e.g. SDRs dialing numbers from Google Maps only to get screened by receptionists: "Doctor is in surgery / send your deck to info@").
-2. The 3-Point Tactical Fix (one bullet line each):
-   • Mechanism: Unlisted crawls live booking/checkout pages across {niche_info['cities']} to extract the founder's personal WhatsApp (no stale Apollo lists or dead info@ emails).
-   • Ban-Proof Rep Workflow: Reps tap a pre-filled wa.me teardown link directly from their phone in 1 click (zero bots, zero account logins, 0% ban liability).
-   • Response Reality: 35%+ direct reply rate within 20 minutes because clinic/brand owners check WhatsApp between meetings.
-3. Concrete Deliverable Call-to-Action: "Dropping a Google Sheet with 10 verified {niche_info['niche']} owner WhatsApp lines + pre-written audits for {niche_info['cities']}. Reply 'SHEET' and I'll DM the link to test."
-NO corporate filler. NO generic intros. NO explicit pricing numbers. Exactly 60-85 words.
+STRICT BENCHMARK FORMAT: WRITE IN THIS EXACT BLUNT, TRANSPARENT BUILDER VOICE.
+Target readers: Agency founders, performance marketers, and growth operators in B2B WhatsApp groups.
+NO generic marketing fluff. NO city restrictions. NO promising static spreadsheets. State the tool's exact mechanical reality.
+
+Follow this exact structural template adapted to {niche_info['niche']}:
+
+I run a bot that finds verified owner WhatsApp numbers for {niche_info['niche']} outreach.
+
+Not a sales pitch. Here is what the tool does.
+
+It finds the lead. It pulls the owner's direct mobile number from the business's own website and public business listings. Not info@. Not a reception desk.
+
+It writes the message. A short teardown message for that specific business, based on what they sell.
+
+It sends in one tap. One tap opens WhatsApp with the message already typed. You hit send from your own number, so it reads like you.
+
+No logins. No cookies. Nothing to get flagged. Every message carries a "Reply STOP to opt out" line, so it stays compliant.
+
+Try it yourself. Go to unlistedbot.pages.dev, pick a plan, and message me here. I will give you access to run it on your own niche.
+
+If it books you meetings, we talk about a license at the end. If it doesn't, you owe nothing — and the leads stay yours.
+
 
 === 3. LINKEDIN AUTHORITY POST ===
 - Compelling scroll-stopping 2-line hook.
 - A hard-hitting breakdown of why Indian agencies waste money on SDRs cold-calling receptionists or sending dead emails.
 - Contrast table or bullet points comparing Old Outbound (Apollo/IG scrapers/calls) vs New Outbound (Direct WhatsApp + 100% ban-proof, zero password requests).
-- Offer & CTA: "Want to test this? Comment 'DATA' and your city below — I'll send you 10 verified owner WhatsApp lines for your niche 100% free."
-- 130-180 words. Clean LinkedIn formatting. NO explicit pricing numbers.
+- Offer & CTA: "Want to test this? Go to unlistedbot.pages.dev or drop your niche below — test it 100% free on your target accounts. If it books meetings, we scale. If not, ₹0."
+- 130-180 words. Clean LinkedIn formatting. NO explicit pricing numbers. NO city restrictions. NO promises of manual spreadsheets.
 
 === 4. DIRECT OUTBOUND TROJAN HORSE PITCH ===
 - A 1-to-1 cold WhatsApp message Ram can send directly to 5 agency founders who serve {niche_info['niche']}.
-- Permissionless value: "Hey [Name], ran a live scan across [City] and pulled 3 verified clinic/business owner WhatsApp direct lines this morning: [Lead 1, Lead 2, Lead 3]. Have 30 more in a sheet. Free to test if your team wants?"
-- Under 80 words. Zero pitch, 100% value.
+- Format: Deliver 1 live verified decision-maker found from their niche's live website + the exact 1-tap teardown message ready to send.
+- Example: "Hey [Name], saw your agency scales [target niche]. Our bot crawled [Target Prospect Website], pulled the founder's direct WhatsApp line, and wrote a 2-line audit ready to send in 1 tap from your phone. Want to test running this on your own client list? Unlocked free trial access for you at unlistedbot.pages.dev"
+- Under 80 words. Pure demonstration of value. NO spreadsheet promises.
 
 === 5. PIGGYBACK PROTOCOL (TOP CREATORS & READY-TO-PASTE COMMENTS) ===
 Select 2-3 top creators whose audience consists of BUILDERS & OPERATORS across the Indian and UAE (Dubai/GCC) markets (agency founders, performance marketers, AEO/GEO leaders, and high-ticket B2B growth operators) — NOT entry-level learners or students.
@@ -314,9 +328,9 @@ def build_html_email(niche_info, raw_text):
     background: #2563eb;
     color: #ffffff;
   }}
-  .badge-city {{
+  .badge-target {{
     background: #1e293b;
-    color: #94a3b8;
+    color: #38bdf8;
     border: 1px solid #334155;
     margin-left: 6px;
   }}
@@ -423,10 +437,10 @@ def build_html_email(niche_info, raw_text):
   <div class="header">
     <div class="badge-row">
       <span class="badge badge-category">{html.escape(niche_info.get('category', 'B2B Outbound'))}</span>
-      <span class="badge badge-city">{html.escape(niche_info.get('cities', 'India'))}</span>
+      <span class="badge badge-target">{html.escape(niche_info.get('target_market', 'B2B Vertical'))}</span>
     </div>
     <h1>Today's Target: {html.escape(niche_info.get('niche', 'B2B Niche'))}</h1>
-    <div class="meta-sub">Deal Size: {html.escape(niche_info.get('ticket', '₹50k-₹2L'))} • Zero SDR Payroll Bloat • Fractional Setup</div>
+    <div class="meta-sub">Market: {html.escape(niche_info.get('target_market', 'B2B'))} • Deal Size: {html.escape(niche_info.get('ticket', '₹50k-₹2L'))} • Zero SDR Payroll Bloat</div>
   </div>
 
   <!-- Card 1: Directive -->
