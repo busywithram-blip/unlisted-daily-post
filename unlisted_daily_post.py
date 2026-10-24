@@ -150,17 +150,27 @@ OUTPUT FORMAT (You must output EXACTLY the following 5 labeled sections using th
 - Daily Book Takeaway: Exactly 1 actionable insight from a classic book (Influence by Cialdini, Never Split the Difference by Chris Voss, $100M Offers by Alex Hormozi, Alchemy by Rory Sutherland, The Ultimate Sales Machine by Chet Holmes, Thinking Fast and Slow by Daniel Kahneman, Pitch Anything by Oren Klaff). Format: 📖 *[Book Name] by [Author]:* "[Quote/Concept] — [Application]"
 
 === 2. WHATSAPP COMMUNITY POST ===
-STRICT CONSTRAINT: 60 TO 85 WORDS MAXIMUM. ULTRA-TACTICAL OPERATIONAL CLARITY.
-Target readers: Agency founders and performance marketing leads in founder WhatsApp groups.
-DO NOT write generic marketing fluff ("cold outreach is dead", "WhatsApp is personal"). Write like an elite agency operations lead diagnosing a broken sales pipeline.
-Use this exact 3-part micro-structure:
-1. Operational Bottleneck Hook (1-2 lines): Name the agency type pitching {niche_info['niche']} in {niche_info['cities']}. Name the exact gatekeeper barrier (e.g. SDRs dialing numbers from Google Maps only to get screened by receptionists: "Doctor is in surgery / send your deck to info@").
-2. The 3-Point Tactical Fix (one bullet line each):
-   • Mechanism: Unlisted crawls live booking/checkout pages across {niche_info['cities']} to extract the founder's personal WhatsApp (no stale Apollo lists or dead info@ emails).
-   • Ban-Proof Rep Workflow: Reps tap a pre-filled wa.me teardown link directly from their phone in 1 click (zero bots, zero account logins, 0% ban liability).
-   • Response Reality: 35%+ direct reply rate within 20 minutes because clinic/brand owners check WhatsApp between meetings.
-3. Concrete Deliverable Call-to-Action: "Dropping a Google Sheet with 10 verified {niche_info['niche']} owner WhatsApp lines + pre-written audits for {niche_info['cities']}. Reply 'SHEET' and I'll DM the link to test."
-NO corporate filler. NO generic intros. NO explicit pricing numbers. Exactly 60-85 words.
+STRICT BENCHMARK FORMAT: WRITE IN THIS EXACT BLUNT, TRANSPARENT BUILDER VOICE.
+Target readers: Agency founders, performance marketers, and growth operators in B2B WhatsApp groups.
+NO generic marketing fluff. NO fake 'Reply SHEET' traps.
+Follow this exact structural template adapted to {niche_info['niche']} in {niche_info['cities']}:
+
+I run a bot that finds verified owner WhatsApp numbers for {niche_info['niche']} outreach.
+
+Not a sales pitch. Here is what the tool does.
+
+It finds the lead. It pulls the owner's direct mobile number from the business's own website and local listings across {niche_info['cities']}. Not info@. Not a reception desk.
+
+It writes the message. A short teardown message for that specific business, based on what they sell and which city they are in.
+
+It sends in one tap. One tap opens WhatsApp with the message already typed. You hit send from your own number, so it reads like you.
+
+No logins. No cookies. Nothing to get flagged. Every message carries a "Reply STOP to opt out" line, so it stays compliant.
+
+Try it yourself. Go to unlistedbot.pages.dev, pick a plan, and message me here. I will give you access to run it on your own niche and city.
+
+If it books you meetings, we talk about a license at the end. If it doesn't, you owe nothing — and the leads stay yours.
+
 
 === 3. LINKEDIN AUTHORITY POST ===
 - Compelling scroll-stopping 2-line hook.
